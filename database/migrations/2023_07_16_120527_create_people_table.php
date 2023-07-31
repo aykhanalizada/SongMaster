@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    
+
     public function up(): void
     {
         Schema::create('people', function (Blueprint $table) {
@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('father_name');
             $table->date('birth_date');
-            $table->enum('civil_status', ['single', 'married']); 
+            $table->enum('civil_status', ['single', 'married']);
             $table->timestamps();
         });
     }
@@ -24,5 +24,5 @@ return new class extends Migration
     {
         Schema::dropIfExists('people');
     }
-    
+
 };

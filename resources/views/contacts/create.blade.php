@@ -67,17 +67,17 @@
                 </div>
                 <div class="form-group">
                     <p>Civil Status:</p>
-                    <input type="radio" name="civil_status" value="single" @if(old('civil_status') === 'single') checked @endif>
-                    <label>Single</label>
-                    <input type="radio" name="civil_status" value="married" class="ml-5" @if(old('civil_status')==='married') checked @endif>
-                    <label>Married</label>
+                    <input  id="cv" type="radio" name="civil_status" value="single" @if(old('civil_status') === 'single') checked @endif>
+                    <label for="cv">Single</label>
+                    <input id="cv2" type="radio" name="civil_status" value="married" class="ml-5" @if(old('civil_status')==='married') checked @endif>
+                    <label for="cv2">Married</label>
                     @error('civil_status')
                         <p class="text-danger">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="d-flex justify-content-between">
                     <button type="submit" class="btn btn-primary">Submit</button>
-                    <a class="btn btn-light" href="index">Go Back</a>
+                    <a class="btn btn-light" href="/home">Go Back</a>
                 </div>
             </form>
 

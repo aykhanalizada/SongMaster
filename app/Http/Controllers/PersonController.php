@@ -27,15 +27,15 @@ class PersonController extends Controller
             "birth_date" => $bdate,
             "civil_status" => $cstatus,
         ]);
-        return redirect('index')->with('success', 'Person has been created successfully.');
+        return redirect('home')->with('success', 'Person has been created successfully.');
     }
 
 
 
-    public function index()
+    public function home()
     {
         $data = Person::all();
-        return view('contacts.index', ['people' => $data]);
+        return view('contacts.home', ['people' => $data]);
     }
 
     public function delete($id)
@@ -46,7 +46,7 @@ class PersonController extends Controller
             $data->delete();
         }
 
-        return redirect('index')->with('success', 'Person has been deleted successfully.');
+        return redirect('home')->with('success', 'Person has been deleted successfully.');
     }
 
 
@@ -75,7 +75,7 @@ public function edit(StorePersonRequest $req)
         $data->civil_status = $req->civil_status;
         $data->save();
 
-        return redirect('index')->with('success', 'Person has been updated successfully.');
+        return redirect('home')->with('success', 'Person has been updated successfully.');
     }
 
     public function showCreate()
