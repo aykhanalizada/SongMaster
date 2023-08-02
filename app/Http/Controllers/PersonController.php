@@ -3,21 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePersonRequest;
+use Illuminate\Database\Schema\IndexDefinition;
 use Illuminate\Http\Request;
 use App\Models\Person;
 
 class PersonController extends Controller
 {
 
+    public function index()
+    {
+        $data = Person::all();
+        return view('contacts.index')-> with('people', $data);
+    }
+    public function create()
+    {
 
-
-    public function create(StorePersonRequest $request)
+        return view("contacts.create");
+    }
+    public function store(StorePersonRequest $request)
     {
         $fname = $request->first_name;
         $lname = $request->last_name;
         $father = $request->father_name;
         $bdate = $request->birth_date;
-        $cstatus = $request->civil_status;
+        $cstatus = $request->civil_status == 'Evli' ? '1' : '0';
+
 
 
         Person::create([
@@ -27,16 +37,12 @@ class PersonController extends Controller
             "birth_date" => $bdate,
             "civil_status" => $cstatus,
         ]);
-        return redirect('home')->with('success', 'Person has been created successfully.');
+        return redirect(route('person.index'))->with('success', 'Person has been created successfully.');
     }
 
 
 
-    public function home()
-    {
-        $data = Person::all();
-        return view('contacts.home', ['people' => $data]);
-    }
+
 
     public function delete($id)
     {
@@ -46,12 +52,12 @@ class PersonController extends Controller
             $data->delete();
         }
 
-        return redirect('home')->with('success', 'Person has been deleted successfully.');
+        return redirect(route('person.index'))->with('success', 'Person has been deleted successfully.');
     }
 
 
 
-    function showData($id)
+    function show($id)
     {
         $data = Person::find($id);
 
@@ -61,7 +67,7 @@ class PersonController extends Controller
         return view('contacts.edit', ['data' => $data]);
     }
 
-public function edit(StorePersonRequest $req)
+public function update(StorePersonRequest $req)
 {
     $data = Person::find($req->id);
 
@@ -75,12 +81,11 @@ public function edit(StorePersonRequest $req)
         $data->civil_status = $req->civil_status;
         $data->save();
 
-        return redirect('home')->with('success', 'Person has been updated successfully.');
+        return redirect(route('person.index'))->with('success', 'Person has been updated successfully.');
     }
 
-    public function showCreate()
-    {
 
-        return view("contacts.create");
-    }
+
+
+
 }

@@ -20,9 +20,9 @@
 
 
             <div class="form-outline mb-4" style="height: 70px" >
-                <label class="form-label">Email address</label>
-                <input type="email" class="form-control" name="email" placeholder=" Enter Email"/>
-                @error('email')
+                <label class="form-label">Email address or username</label>
+                <input type="text" class="form-control" name="email_or_username" placeholder=" Enter Email or username"/>
+                @error('email_or_username')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
             </div>

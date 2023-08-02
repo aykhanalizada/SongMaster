@@ -18,58 +18,58 @@
         <div>
             <form method="POST" action="{{ url('/register') }}">
                 @csrf
-                <h1 class="mb-3">Member Registration</h1>
+                <h1 class="mb-4 mt-5">Member Registration</h1>
 
 
-                <div class="form-outline mb-3" style="height: 70px" >
+                <div class="form-outline mb-4" style="height: 70px" >
                     <label class="form-label ">Name</label>
-                    <input type="text"class="form-control form-control-sm " name="name"   placeholder="Enter Name"  value="{{old('name')}}"  />
+                    <input type="text"class="form-control form-control " name="name"   placeholder="Enter Name"  value="{{old('name')}}"  />
 
                @error('name')
-                    <small class="text-danger">{{ $message }}</small>
+                    <p class="text-danger">{{ $message }}</p>
                 @enderror
                 </div>
 
-                <div class="form-outline mb-3 " style="height: 70px" >
+                <div class="form-outline mb-4 " style="height: 70px" >
                         <label class="form-label" >Username</label>
-                     <input type="text"  class="form-control form-control-sm" name="username"  placeholder=" Enter Username" value="{{old('username')}}"  />
+                     <input type="text"  class="form-control form-control" name="username"  placeholder=" Enter Username" value="{{old('username')}}"  />
 
                     @error('username')
-                    <small class="text-danger">{{ $message }}</small>
+                    <p class="text-danger">{{ $message }}</p>
                 @enderror
                 </div>
 
 
-                <div class="form-outline mb-3" style="height: 70px" >
+                <div class="form-outline mb-4" style="height: 70px" >
                     <label class="form-label" >Email</label>
-                    <input type="email"  class="form-control form-control-sm"  name="email"  placeholder=" Enter Email"  value="{{old('email')}}"       />
+                    <input type="email"  class="form-control form-control"  name="email"  placeholder=" Enter Email"  value="{{old('email')}}"       />
 
                     @error('email')
-                    <small class="text-danger">{{ $message }}</small>
+                    <p class="text-danger">{{ $message }}</p>
                 @enderror
                 </div>
 
 
-                <div class="form-outline mb-3" style="height: 70px" >
+                <div class="form-outline mb-4" style="height: 70px" >
                     <label class="form-label" >Password</label>
-                    <input type="password" class="form-control form-control-sm" name="password"  placeholder=" Enter Password"    value="{{old('password')}}"      />
+                    <input type="password" class="form-control form-control" name="password"  placeholder=" Enter Password"    value="{{old('password')}}"      />
 
                     @error('password')
-                    <small class="text-danger">{{ $message }}</small>
+                    <p class="text-danger">{{ $message }}</p>
                 @enderror
                 </div>
 
 
-                <div class="form-outline mb-3" style="height: 70px" >
+                <div class="form-outline mb-4" style="height: 70px" >
                     <label class="form-label">Repeat password</label>
-                    <input type="password" class="form-control form-control-sm"  name="password_confirmation"  placeholder=" Enter Password again"    value="{{old('password')}}"  />
+                    <input type="password" class="form-control form-control"  name="password_confirmation"  placeholder=" Enter Password again"    value="{{old('password')}}"  />
 
                     @error('password')
-                    <small class="text-danger">{{ $message }}</small>
+                    <p class="text-danger">{{ $message }}</p>
                 @enderror
                 </div>
 
-                {{-- <div class="form-check d-flex justify-content-center mb-3">
+                {{-- <div class="form-check d-flex justify-content-center mb-4">
                     <input class="form-check-input me-1" type="checkbox" value="" id="registerCheck" checked
                         aria-describedby="registerCheckHelpText" />
                     <label class="form-check-label" for="registerCheck">
@@ -77,7 +77,7 @@
                     </label>
                 </div> --}}
 <div>
-    <small><a href="{{route('login')}}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Already registered?</a></small>
+    <p><a href="{{route('login')}}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Already registered?</a></p>
     <button type="submit" class="btn btn-primary btn-block mb-3 mt-1 w-100">Register</button>
 </div>
             </form>

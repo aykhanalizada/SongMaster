@@ -10,11 +10,11 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/create', [PersonController::class, 'showCreate'])->name('gocreate');
-    Route::post('/create', [PersonController::class, 'create'])->name('submit-form');
-    Route::get('/home', [PersonController::class, 'home'])->name('home');
-    Route::get('edit/{id}', [PersonController::class, 'showData']);
-    Route::post('/home', [PersonController::class, 'edit']);
+    Route::get('/people', [PersonController::class, 'index'])->name('person.index');
+    Route::get('/create', [PersonController::class, 'create'])->name('person.create');
+    Route::post('/store', [PersonController::class, 'store'])->name('person.store');
+    Route::get('/edit/{id}', [PersonController::class, 'show']);
+    Route::post('/people', [PersonController::class, 'update']);
     Route::get('/delete/{id}', [PersonController::class, 'delete']);
 });
 

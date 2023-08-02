@@ -31,32 +31,37 @@ class AuthController extends Controller
 
         $user = User::create([
             'name' => $request->name,
+            'username'=>$request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
         Auth::login($user);
 
-        return redirect('/home');
+        return redirect()->intended(route('person.index'));
+
     }
 
     public function doLogin(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => 'required|email',
+        $request->validate([
+            'email_or_username' => 'required',
             'password' => 'required',
         ]);
 
         $remember = $request->has('remember');
 
-        if (Auth::attempt($credentials, $remember)) {
-            return redirect()->intended('/home');
+        $fieldType = filter_var($request->email_or_username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+        if (Auth::attempt([$fieldType => $request->email_or_username, 'password' => $request->password], $remember)) {
+            return redirect()->intended(route('person.index'));
         } else {
             return back()->withErrors([
-                'email' => 'The provided credentials do not match our records.',
+                'email_or_username' => 'The provided credentials do not match our records.',
             ]);
         }
     }
+
 
 
     public function logout()

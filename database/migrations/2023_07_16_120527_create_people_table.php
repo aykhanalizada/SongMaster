@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('father_name');
             $table->date('birth_date');
-            $table->enum('civil_status', ['single', 'married']);
+            $table->enum('civil_status', ['1', '0']);
             $table->timestamps();
         });
     }

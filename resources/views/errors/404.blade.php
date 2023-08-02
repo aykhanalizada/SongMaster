@@ -29,7 +29,7 @@ h1,p{
                 <p class="lead">
                     The page you’re looking for doesn’t exist.
                   </p>
-                <a href="{{route('home')}}" class="btn btn-primary">Go Home</a>
+                <a href="{{route('person.index')}}" class="btn btn-primary">Go Home</a>
             </div>
         </div>
     </body>

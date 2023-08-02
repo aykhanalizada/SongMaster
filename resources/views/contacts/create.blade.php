@@ -35,7 +35,7 @@
     <h1 class="m-4">Create New Person</h1>
     <div class="container row center mt-5">
         <div class="col-6 m-auto ">
-            <form method="POST" action="{{ route('submit-form') }}">
+            <form method="POST" action="{{ route('person.store') }}">
                 @csrf
                 <div class="form-group">
                     <label>First Name</label>
@@ -67,17 +67,17 @@
                 </div>
                 <div class="form-group">
                     <p>Civil Status:</p>
-                    <input  id="cv" type="radio" name="civil_status" value="single" @if(old('civil_status') === 'single') checked @endif>
-                    <label for="cv">Single</label>
-                    <input id="cv2" type="radio" name="civil_status" value="married" class="ml-5" @if(old('civil_status')==='married') checked @endif>
-                    <label for="cv2">Married</label>
+                    <input  id="cv" type="radio" name="civil_status" value="subay" @if(old('civil_status') === 'subay') checked @endif>
+                    <label for="cv">Subay</label>
+                    <input id="cv2" type="radio" name="civil_status" value="evli" class="ml-5" @if(old('civil_status')==='evli') checked @endif>
+                    <label for="cv2">Evli</label>
                     @error('civil_status')
                         <p class="text-danger">{{ $message }}</p>
                     @enderror
                 </div>
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between mb-5" >
                     <button type="submit" class="btn btn-primary">Submit</button>
-                    <a class="btn btn-light" href="/home">Go Back</a>
+                    <a class="btn btn-light" href="{{route('person.index')}}">Go Back</a>
                 </div>
             </form>
 

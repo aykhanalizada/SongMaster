@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="icon" href="/icons8-edit-32.png">
+    <link rel="icon" href="/icons8-update-32.png">
     <title>Edit</title>
 </head>
 <style>
@@ -41,7 +41,7 @@
 
     <div class="container row center mt-5">
         <div class="col-6 m-auto ">
-            <form method="POST" action="/home">
+            <form method="POST" action="{{route('person.index')}}">
                 @csrf
                 <input type="hidden" class="form-control" name="id"
                     value="{{ isset($data['id']) ? $data['id'] : '' }}">
@@ -72,26 +72,25 @@
                 <div class="form-group">
                     <label>Birth Date</label>
                     <input type="date" class="form-control" placeholder="Enter birth Date" name="birth_date"
-                        value={{ $data['birth_date'] }}>
+                    value="{{ $data->formatted_birth_date }}">
+
                     @error('birth_date')
                         <p class="btn-danger mt-1">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="form-group mt-1">
                     <p>Civil Status:</p>
-                    <input id="cv" type="radio" name="civil_status" value="Single"
-                        {{ $data['civil_status'] === 'single' ? 'checked' : '' }}>
-                    <label for="cv">Single</label>
-                    <input id="cv2" type="radio" name="civil_status" value="Married"
-                        {{ $data['civil_status'] === 'married' ? 'checked' : '' }} class="ml-5">
-                    <label for="cv2">Married</label>
+                    <input id="cv" type="radio" name="civil_status" value= "Subay" {{ $data['civil_status'] === 'Subay' ? 'checked' : '' }}>
+                    <label for="cv">Subay</label>
+                    <input id="cv2" type="radio" name="civil_status" value= "Evli" {{ $data['civil_status'] === 'Evli' ? 'checked' : '' }} class="ml-5">
+                    <label for="cv2">Evli</label>
                     @error('civil_status')
-                        <p class="civil_status">{{ $message }}</p>
+                        <p class="btn-danger mt-1">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="d-flex justify-content-between">
                     <button type="submit" class="btn btn-primary">Submit</button>
-                    <a class="btn btn-light" href="{{ route('home') }}">Go Back</a>
+                    <a class="btn btn-light" href="{{ route('person.index') }}">Go Back</a>
                 </div>
             </form>
         </div>
