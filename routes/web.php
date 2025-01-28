@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PersonController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PersonController;
+use Illuminate\Support\Facades\Route;
 
 
 Route::middleware(['auth'])->group(function () {
@@ -14,15 +14,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/delete/{id}', [PersonController::class, 'delete']);
 });
 
-Route::middleware(['redirectIfAuthenticated'])->group(function(){
-    Route::get('/', [AuthController::class, 'login'])->middleware('guest')->name('login');
+Route::middleware(['redirectIfAuthenticated'])->group(function () {
+    Route::view('/', 'auth.login')->middleware('guest')->name('login');
     Route::post('/login', [AuthController::class, 'handleLogin'])->middleware('guest');
 
-    Route::get('/register', [AuthController::class, 'register'])->middleware('guest')->name('register');
+    Route::view('/register', 'auth.register')->middleware('guest')->name('register');;
     Route::post('/register', [AuthController::class, 'handleRegister'])->middleware('guest');
 
 });
-
 
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
