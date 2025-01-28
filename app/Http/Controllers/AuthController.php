@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -20,29 +20,7 @@ class AuthController extends Controller
     }
 
 
-    public function doRegister(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'username' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:3|confirmed',
-        ]);
-
-        $user = User::create([
-            'name' => $request->name,
-            'username'=>$request->username,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        Auth::login($user);
-
-        return redirect()->intended(route('person.index'));
-
-    }
-
-    public function doLogin(Request $request)
+    public function handleLogin(Request $request)
     {
         $request->validate([
             'email_or_username' => 'required',
@@ -54,7 +32,7 @@ class AuthController extends Controller
         $fieldType = filter_var($request->email_or_username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
         if (Auth::attempt([$fieldType => $request->email_or_username, 'password' => $request->password], $remember)) {
-            return redirect()->intended(route('person.index'));
+            return redirect()->route('person.index');
         } else {
             return back()->withErrors([
                 'email_or_username' => 'The provided credentials do not match our records.',
@@ -63,15 +41,32 @@ class AuthController extends Controller
     }
 
 
+    public function handleRegister(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'username' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:3|confirmed',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->route('login');
+
+    }
+
 
     public function logout()
     {
         Auth::logout();
-        return redirect('/login');
+        return redirect()->route('login');
     }
-
-
-
 
 
 }
