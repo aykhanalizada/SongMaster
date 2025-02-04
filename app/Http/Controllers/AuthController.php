@@ -22,7 +22,7 @@ class AuthController extends Controller
         $fieldType = filter_var($request->email_or_username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
         if (Auth::attempt([$fieldType => $request->email_or_username, 'password' => $request->password], $remember)) {
-            return redirect()->route('person.index');
+            return redirect()->route('songs.index');
         } else {
             return back()->withErrors([
                 'email_or_username' => 'The provided credentials do not match our records.',

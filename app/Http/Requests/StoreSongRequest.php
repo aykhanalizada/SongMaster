@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePersonRequest extends FormRequest
+class StoreSongRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,9 @@ class StorePersonRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "first_name" => "required|min:3|max:20|regex:/^[A-Za-z]+$/",
-            "last_name" => "required|min:3|max:20||regex:/^[A-Za-z]+$/",
-            "father_name" => "required|min:3|max:20|regex:/^[A-Za-z]+$/",
-            "birth_date" => "required|date_format:Y-m-d",
-            "civil_status" => "required",
+            "title" => "required",
+            "artist_name" => 'required',
+            'release_year' => ['required', "date_format:Y"]
         ];
     }
 }

@@ -18,7 +18,7 @@ class RedirectIfAuthenticated
     {
 
         if (Auth::check()) {
-            return redirect()->route('person.index');
+            return redirect()->route('songs.index');
         }
 
         return $next($request);
