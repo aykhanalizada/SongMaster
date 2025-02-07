@@ -13,12 +13,14 @@ class SongController extends Controller
     {
         $songs = Song::where('is_deleted', 0)->get();
 
-        return view('songs.index', compact('songs'));
+        return inertia('Songs/Index', [
+            'songs' => $songs
+        ]);
     }
 
     public function create()
     {
-        return view("songs.create");
+        return inertia('Songs/Create');
     }
 
     public function store(StoreSongRequest $request)
@@ -39,7 +41,7 @@ class SongController extends Controller
     {
         $song = Song::findOrFail($id);
 
-        return view('songs.edit', compact('song'));
+        return inertia('Songs/Edit', ['song' => $song]);
     }
 
     public function update(UpdateSongRequest $request, $id)

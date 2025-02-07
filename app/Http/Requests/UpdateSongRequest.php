@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class UpdateSongRequest extends FormRequest
 {
@@ -25,7 +24,13 @@ class UpdateSongRequest extends FormRequest
         return [
             "title" => "required",
             "artist_name" => 'required',
-            'release_year' => ['required', "date_format:Y"]
+            'release_year' => [
+                'required',
+                "date_format:Y",
+                "integer",
+                "min:1901",
+                "max:2100"
+            ]
         ];
     }
 }

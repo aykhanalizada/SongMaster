@@ -20,9 +20,8 @@ body {
 }
 
 .sidebar.collapsed .sidebar-link span {
-    display: none;  /* Hide text but keep icons visible */
+    display: none; /* Hide text but keep icons visible */
 }
-
 
 
 .sidebar-link {
@@ -71,7 +70,7 @@ body {
     width: 100%;
 }
 
-.collapsed~.main-content {
+.collapsed ~ .main-content {
     margin-left: var(--sidebar-width-collapsed);
 }
 
@@ -90,9 +89,6 @@ body {
     transition: transform 0.3s ease, right 0.3s ease;
 }
 
-.collapsed .toggle-btn {
-    transform: rotate(180deg);
-}
 
 .collapsed .hide-on-collapse {
     opacity: 0;
