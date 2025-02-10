@@ -1,10 +1,12 @@
 <script setup>
 import { computed, defineProps } from 'vue';
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 
 const props = defineProps({
     collapsed: Boolean,
 });
+
+const currentUrl = computed(() => usePage().url);
 
 const iconClass = computed(() => props.collapsed ? 'fas fa-chevron-right' : 'fas fa-chevron-left')
 </script>
@@ -20,12 +22,22 @@ const iconClass = computed(() => props.collapsed ? 'fas fa-chevron-right' : 'fas
             <p class="text-muted small hide-on-collapse">Dashboard</p>
         </div>
 
-        <div class="nav flex-column flex-grow-1">
-            <Link :href="route('songs.index')" class="sidebar-link active text-decoration-none p-3">
-                <i class="fas fa-home me-3"></i>
+        <div class="nav flex-column flex-grow">
+            <Link :href="route('songs.index')"
+                  class="sidebar-link text-decoration-none p-3"
+                  :class="{'active': currentUrl.startsWith('/songs')}">
+                <i class="fa-solid fa-music me-3"></i>
                 <span class="hide-on-collapse">Songs</span>
             </Link>
+        </div>
 
+        <div class="nav flex-column flex-grow-1">
+            <Link :href="route('artists.index')"
+                  class="sidebar-link text-decoration-none p-3"
+                  :class="{'active': currentUrl.startsWith('/artists')}">
+                <i class="fa-solid fa-person me-3"></i>
+                <span class="hide-on-collapse">Artists</span>
+            </Link>
         </div>
 
         <Link :href="route('logout')" class="sidebar-link text-decoration-none p-3">

@@ -1,18 +1,27 @@
 <script setup>
 import AppLayout from '../AppLayout.vue';
 import { Link, useForm } from '@inertiajs/vue3';
+import { defineProps } from 'vue';
+import Multiselect from 'vue-multiselect';
+
 
 defineOptions({
     layout: AppLayout
 });
 
+const props = defineProps({
+    'artists': Array
+})
+
 const form = useForm({
     title: '',
-    artist_name: '',
+    artist_id: [],
     release_year: ''
 })
 
 const submitForm = () => {
+    form.artist_id = form.artist_id.map(artist => artist.id);
+
     form.post(route('songs.store'), {
         preserveScroll: true,
         onSuccess: () => {
@@ -41,9 +50,21 @@ const submitForm = () => {
                     </div>
                     <div class="form-group mb-3">
                         <label class="text-light">Artist Name</label>
-                        <input type="text" class="form-control" placeholder="Enter artist name"
-                               v-model="form.artist_name">
-                        <p v-if="form.errors.artist_name" class="text-danger">{{ form.errors.artist_name }}</p>
+                        <multiselect
+                            v-model="form.artist_id"
+                            :options="artists"
+                            :multiple="true"
+                            :searchable="true"
+                            label="name"
+                            track-by="id"
+                            placeholder="Select artists"
+                            class="bg-light"
+                        />
+                        <p v-if="form.errors.artist_id" class="text-danger">{{ form.errors.artist_id }}</p>
+
+                        <p v-for="(error,index) in form.errors" :key="index" class="text-danger">
+                            {{ error }}
+                        </p>
                     </div>
                     <div class="form-group mb-3">
                         <label class="text-light">Release Year</label>
@@ -68,6 +89,4 @@ const submitForm = () => {
 
 </template>
 
-<style scoped>
-
-</style>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

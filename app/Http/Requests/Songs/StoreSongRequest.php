@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Songs;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -23,7 +23,7 @@ class StoreSongRequest extends FormRequest
     {
         return [
             "title" => "required",
-            "artist_name" => 'required',
+            "artist_id" => 'required',
             'release_year' => ['required', "date_format:Y"]
         ];
     }

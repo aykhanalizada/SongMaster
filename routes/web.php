@@ -1,14 +1,17 @@
 <?php
 
+use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SongController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::inertia('/', 'Home');
+Route::inertia('/', 'Songs/Index');
 
 
 Route::resource('songs', SongController::class);
+Route::resource('artists', ArtistController::class);
+
 /*Route::middleware(['auth'])->group(function () {
 
 });*/

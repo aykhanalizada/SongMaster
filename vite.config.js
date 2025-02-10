@@ -16,4 +16,7 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    optimizeDeps: {
+        include: ['vue-multiselect'],
+    },
 });

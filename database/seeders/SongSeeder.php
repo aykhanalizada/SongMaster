@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Song;
 use Illuminate\Database\Seeder;
 
 class SongSeeder extends Seeder
@@ -13,30 +14,29 @@ class SongSeeder extends Seeder
     {
         $songs = [
             [
-                'title' => 'Belə Olmaz',
-                'artist_name' => 'RG',
-                'release_year' => 2018,
+                'title' => 'Yenidən',
+                'release_year' => 2020
             ],
             [
-                'title' => 'Etiraf Otağı',
-                'artist_name' => 'H.O.S.T',
-                'release_year' => 2008,
+                'title' => 'Toxunma',
+                'release_year' => 2021
             ],
             [
-                'title' => 'Yenə Gedirəm',
-                'artist_name' => 'Rüzgar',
-                'release_year' => 2018,
+                'title' => 'Suallar',
+                'release_year' => 2019
             ],
             [
-                'title' => 'Gel Bana',
-                'artist_name' => 'Mustafa Sandal',
-                'release_year' => 2019,
+                'title' => 'Dəlixanadan Məktublar 2',
+                'release_year' => 2014
             ],
             [
-                'title' => '1st class',
-                'artist_name' => 'Paster',
-                'release_year' => 2016,
+                'title' => 'Molotow Cocktail',
+                'release_year' => 2017
             ],
         ];
+
+        foreach ($songs as $song) {
+            Song::create($song);
+        }
     }
 }

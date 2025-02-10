@@ -8,7 +8,7 @@ defineOptions({
     layout: AppLayout
 })
 
-defineProps({
+const props = defineProps({
     songs: Array
 });
 
@@ -34,6 +34,7 @@ const deleteSong = (id) => {
         }
     })
 }
+
 </script>
 
 <template>
@@ -42,10 +43,9 @@ const deleteSong = (id) => {
 
         <div class="m-4 d-flex">
             <Link :href="route('songs.create')" class="btn btn-success me-auto">Create New Song</Link>
-
         </div>
 
-        <table class="table table-striped table-dark">
+        <table class="table table-striped table-dark text-center">
             <thead>
             <tr>
                 <th scope="col">#</th>
@@ -59,17 +59,23 @@ const deleteSong = (id) => {
             <tbody>
 
 
-            <tr v-for="(song,index) in songs" :key="song.id">
+            <tr v-for="(song,index) in songs" :key="song.id" class="align-middle">
                 <td>{{ index + 1 }}</td>
                 <td>{{ song.title }}</td>
-                <td>{{ song.artist_name }}</td>
+
+                <td>
+                    <span v-for="(artist, index) in song.artists" :key="index">
+                         {{ artist.name }}
+                        <span v-if="index !== song.artists.length - 1">, </span>
+                    </span>
+                </td>
+
+
                 <td>{{ song.release_year }}</td>
                 <td>
-                    <div class="d-flex">
+                    <div class="d-flex justify-content-center">
                         <Link class="btn btn-success me-2" :href="route('songs.edit',song.id)">Edit</Link>
-
                         <button class="btn btn-danger" @click="deleteSong(song.id)">Delete</button>
-
                     </div>
                 </td>
             </tr>

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreSongRequest;
-use App\Http\Requests\UpdateSongRequest;
+use App\Http\Requests\Songs\StoreSongRequest;
+use App\Http\Requests\Songs\UpdateSongRequest;
+use App\Models\Artist;
 use App\Models\Song;
 
 class SongController extends Controller
@@ -11,27 +12,32 @@ class SongController extends Controller
 
     public function index()
     {
-        $songs = Song::where('is_deleted', 0)->get();
+        $songs = Song::with(['artists' => function ($query) {
+            $query->where('is_deleted', 0);
+        }])
+            ->where('is_deleted', 0)
+            ->get();
 
-        return inertia('Songs/Index', [
-            'songs' => $songs
-        ]);
+        return inertia('Songs/Index', compact('songs'));
     }
 
     public function create()
     {
-        return inertia('Songs/Create');
+        $artists = Artist::where('is_deleted', 0)->get();
+
+        return inertia('Songs/Create', compact('artists'));
     }
 
     public function store(StoreSongRequest $request)
     {
         $data = $request->validated();
 
-        Song::create([
+        $song = Song::create([
             'title' => $data['title'],
-            'artist_name' => $data['artist_name'],
             'release_year' => $data['release_year']
         ]);
+
+        $song->artists()->attach($data['artist_id']);
 
         return redirect()->route('songs.index')->with('success', 'Song has been created successfully.');
     }
@@ -39,9 +45,11 @@ class SongController extends Controller
 
     public function edit($id)
     {
-        $song = Song::findOrFail($id);
+        $song = Song::with('artists')->findOrFail($id);
 
-        return inertia('Songs/Edit', ['song' => $song]);
+        $artists = Artist::where('is_deleted', 0)->get();
+
+        return inertia('Songs/Edit', compact('song', 'artists'));
     }
 
     public function update(UpdateSongRequest $request, $id)
@@ -51,10 +59,11 @@ class SongController extends Controller
         $song = Song::findOrFail($id);
 
         $song->title = $data['title'];
-        $song->artist_name = $data['artist_name'];
         $song->release_year = $data['release_year'];
 
         $song->save();
+
+        $song->artists()->sync($data['artist_id']);
 
         return redirect()->route('songs.index')->with('success', 'Song has been updated successfully.');
     }

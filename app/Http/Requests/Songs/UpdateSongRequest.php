@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Songs;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -23,13 +23,9 @@ class UpdateSongRequest extends FormRequest
     {
         return [
             "title" => "required",
-            "artist_name" => 'required',
-            'release_year' => [
-                'required',
-                "date_format:Y",
-                "integer",
-                "min:1901",
-                "max:2100"
+            "artist_id" => 'required|array',
+            'artist_id.*' => 'integer|exists:artists,id',
+            'release_year' => ['required', "date_format:Y"
             ]
         ];
     }
