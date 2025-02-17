@@ -12,6 +12,7 @@ return new class extends Migration {
             $table->id();
             $table->string('title');
             $table->integer('release_year')->unsigned();
+            $table->string('file_path')->nullable();
             $table->boolean('is_deleted')->default(0);
             $table->timestamps();
         });

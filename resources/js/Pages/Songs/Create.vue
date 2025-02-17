@@ -35,21 +35,21 @@ const submitForm = () => {
 
     <div class="content-container">
 
-        <h1 class="mt-4 text-light d-flex justify-content-center">Create New Song</h1>
+        <h1 class="mt-4 d-flex justify-content-center">Create New Song</h1>
 
         <div class="container row center mt-5">
             <div class="col-6 m-auto ">
                 <form @submit.prevent="submitForm">
 
                     <div class="form-group mb-3">
-                        <label class="text-light">Title</label>
+                        <label>Title</label>
                         <input type="text" class="form-control" placeholder="Enter title" v-model="form.title">
 
                         <p v-if="form.errors.title" class="text-danger">{{ form.errors.title }}</p>
 
                     </div>
                     <div class="form-group mb-3">
-                        <label class="text-light">Artist Name</label>
+                        <label>Artist Name</label>
                         <multiselect
                             v-model="form.artist_id"
                             :options="artists"
@@ -67,7 +67,7 @@ const submitForm = () => {
                         </p>
                     </div>
                     <div class="form-group mb-3">
-                        <label class="text-light">Release Year</label>
+                        <label>Release Year</label>
                         <input type="text" class="form-control" placeholder="Enter release year"
                                v-model="form.release_year">
                         <p v-if="form.errors.release_year" class="text-danger">{{ form.errors.release_year }}</p>

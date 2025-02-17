@@ -6,18 +6,16 @@ use App\Http\Controllers\SongController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::inertia('/', 'Songs/Index');
+Route::middleware(['auth'])->group(function () {
+//    Route::inertia('/', 'Songs/Index');
 
+    Route::resource('songs', SongController::class);
+    Route::resource('artists', ArtistController::class);
 
-Route::resource('songs', SongController::class);
-Route::resource('artists', ArtistController::class);
-
-/*Route::middleware(['auth'])->group(function () {
-
-});*/
+});
 
 Route::middleware(['guest'])->group(function () {
-    Route::view('/salam', 'auth.login')->name('login');
+    Route::inertia('/', 'Auth/Login')->name('login');
     Route::post('/login', [AuthController::class, 'handleLogin']);
 
     Route::view('/register', 'auth.register')->name('register');;

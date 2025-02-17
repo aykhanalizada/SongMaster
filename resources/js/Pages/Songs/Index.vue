@@ -2,7 +2,10 @@
 import AppLayout from '../AppLayout.vue';
 import { Link, router } from '@inertiajs/vue3';
 import { defineProps } from 'vue';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+import VuePlyr from "vue-plyr";
+import "vue-plyr/dist/vue-plyr.css";
+
 
 defineOptions({
     layout: AppLayout
@@ -11,6 +14,22 @@ defineOptions({
 const props = defineProps({
     songs: Array
 });
+
+const playerOptions = {
+    autoplay: false, // Prevent unexpected playback
+    muted: false, // Ensure audio is not muted by default
+    controls: [
+        'play',
+        'restart', // Allow users to restart the song
+        'progress',
+        'current-time',
+        'duration',
+        // 'volume', // Allow volume control
+        'settings' // Provide additional settings (like playback speed)
+    ],
+    hideControls: true, // Hide controls when not interacting
+};
+
 
 const deleteSong = (id) => {
 
@@ -35,6 +54,7 @@ const deleteSong = (id) => {
     })
 }
 
+
 </script>
 
 <template>
@@ -50,8 +70,9 @@ const deleteSong = (id) => {
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Title</th>
-                <th scope="col">Artis Name</th>
+                <th scope="col">Artist Name</th>
                 <th scope="col">Release Year</th>
+                <th scope="col">Song</th>
                 <th scope="col">Action</th>
 
             </tr>
@@ -72,14 +93,28 @@ const deleteSong = (id) => {
 
 
                 <td>{{ song.release_year }}</td>
+
+                <td style="max-width: 330px;">
+                    <vue-plyr
+                        v-if="song.file_path"
+                        :options="playerOptions"
+                    >
+                        <audio :src="`/storage/${song.file_path}`" type="audio/mpeg"></audio>
+                    </vue-plyr>
+
+                    <span v-else>No audio available</span>
+                </td>
+
+
                 <td>
                     <div class="d-flex justify-content-center">
                         <Link class="btn btn-success me-2" :href="route('songs.edit',song.id)">Edit</Link>
                         <button class="btn btn-danger" @click="deleteSong(song.id)">Delete</button>
                     </div>
                 </td>
-            </tr>
 
+
+            </tr>
 
             </tbody>
         </table>

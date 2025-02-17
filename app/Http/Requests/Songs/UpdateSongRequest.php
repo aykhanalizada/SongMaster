@@ -25,8 +25,8 @@ class UpdateSongRequest extends FormRequest
             "title" => "required",
             "artist_id" => 'required|array',
             'artist_id.*' => 'integer|exists:artists,id',
-            'release_year' => ['required', "date_format:Y"
-            ]
+            'release_year' => ['required', "date_format:Y"],
+            'music_file' => 'nullable|file'
         ];
     }
 }

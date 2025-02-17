@@ -15,7 +15,7 @@
     @inertiaHead
 </head>
 
-<body class="bg-dark">
+<body class="bg-dark text-light">
 
 @inertia
 
