@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Songs\StoreSongRequest;
 use App\Http\Requests\Songs\UpdateSongRequest;
-use App\Models\Artist;
 use App\Models\Song;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
 class SongController extends Controller
@@ -13,8 +13,9 @@ class SongController extends Controller
 
     public function index()
     {
-        $songs = Song::with(['artists' => function ($query) {
-            $query->where('is_deleted', 0);
+        $songs = Song::with(['user' => function ($query) {
+            $query->where('is_active', 1)
+                ->where('is_deleted', 0);
         }])
             ->where('is_deleted', 0)
             ->get();
@@ -24,21 +25,26 @@ class SongController extends Controller
 
     public function create()
     {
-        $artists = Artist::where('is_deleted', 0)->get();
+        $users = User::where('is_active', 1)
+            ->where('is_deleted', 0)
+            ->get();
 
-        return inertia('Songs/Create', compact('artists'));
+        return inertia('Songs/Create', compact('users'));
     }
 
     public function store(StoreSongRequest $request)
     {
         $data = $request->validated();
 
-        $song = Song::create([
-            'title' => $data['title'],
-            'release_year' => $data['release_year']
-        ]);
+        if ($request->hasFile('music_file')) {
+            $path = $request->file('music_file')->store('music', 'public');
+        }
 
-        $song->artists()->attach($data['artist_id']);
+        Song::create([
+            'user_id' => auth()->id(),
+            'title' => $data['title'],
+            'file_path' => $path
+        ]);
 
         return redirect()->route('songs.index')->with('success', 'Song has been created successfully.');
     }
@@ -46,11 +52,9 @@ class SongController extends Controller
 
     public function edit($id)
     {
-        $song = Song::with('artists')->findOrFail($id);
+        $song = Song::with('user')->findOrFail($id);
 
-        $artists = Artist::where('is_deleted', 0)->get();
-
-        return inertia('Songs/Edit', compact('song', 'artists'));
+        return inertia('Songs/Edit', compact('song'));
     }
 
     public function update(UpdateSongRequest $request, $id)
@@ -59,11 +63,8 @@ class SongController extends Controller
 
         $song = Song::findOrFail($id);
 
+        $song->user_id = auth()->id();
         $song->title = $data['title'];
-        $song->release_year = $data['release_year'];
-
-
-        $song->artists()->sync($data['artist_id']);
 
         if ($request->hasFile('music_file')) {
 

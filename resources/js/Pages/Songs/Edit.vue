@@ -1,32 +1,25 @@
 <script setup>
 import AppLayout from '../AppLayout.vue';
 import { Link, router, useForm } from '@inertiajs/vue3';
-import Multiselect from "vue-multiselect";
 
 defineOptions({
     layout: AppLayout
 })
 
 const props = defineProps({
-    song: Object,
-    artists: Array
+    song: Object
 })
 
 const form = useForm({
     title: props.song.title,
-    artist_id: props.song.artists,
-    release_year: props.song.release_year,
     music_file: null
 })
 
 const submitForm = () => {
-    form.artist_id = form.artist_id.map(artist => artist.id);
 
     router.post(route('songs.update', props.song.id), {
         _method: 'put', // Form method spoofing for Laravel
         title: form.title,
-        artist_id: form.artist_id,
-        release_year: form.release_year,
         music_file: form.music_file,
     }, {
         forceFormData: true, // Ensures FormData usage
@@ -48,28 +41,6 @@ const submitForm = () => {
                         <label>Title</label>
                         <input type="text" class="form-control" placeholder="Enter title" v-model="form.title">
                         <p v-if="form.errors.title" class="text-danger">{{ form.errors.title }}</p>
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label>Artist Name</label>
-                        <multiselect
-                            v-model="form.artist_id"
-                            :options="artists"
-                            :multiple="true"
-                            :searchable="true"
-                            label="name"
-                            track-by="id"
-                            placeholder="Select artists"
-                            class="bg-light"
-                        />
-                        <p v-if="form.errors.artist_id" class="text-danger">{{ form.errors.artist_id }}</p>
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label>Release Year</label>
-                        <input type="text" class="form-control" placeholder="Enter release year"
-                               v-model="form.release_year">
-                        <p v-if="form.errors.release_year" class="text-danger">{{ form.errors.release_year }}</p>
                     </div>
 
                     <div class="form-group mb-3">

@@ -1,28 +1,24 @@
 <script setup>
 import AppLayout from '../AppLayout.vue';
-import { Link, useForm } from '@inertiajs/vue3';
-import { defineProps } from 'vue';
-import Multiselect from 'vue-multiselect';
+import { Link, router, useForm } from '@inertiajs/vue3';
 
 
 defineOptions({
     layout: AppLayout
 });
 
-const props = defineProps({
-    'artists': Array
-})
 
 const form = useForm({
     title: '',
-    artist_id: [],
-    release_year: ''
+    music_file: null
 })
 
 const submitForm = () => {
-    form.artist_id = form.artist_id.map(artist => artist.id);
 
-    form.post(route('songs.store'), {
+    router.post(route('songs.store'), {
+        title: form.title,
+        music_file: form.music_file
+    }, {
         preserveScroll: true,
         onSuccess: () => {
             console.log('Song created successfully!');
@@ -48,31 +44,11 @@ const submitForm = () => {
                         <p v-if="form.errors.title" class="text-danger">{{ form.errors.title }}</p>
 
                     </div>
-                    <div class="form-group mb-3">
-                        <label>Artist Name</label>
-                        <multiselect
-                            v-model="form.artist_id"
-                            :options="artists"
-                            :multiple="true"
-                            :searchable="true"
-                            label="name"
-                            track-by="id"
-                            placeholder="Select artists"
-                            class="bg-light"
-                        />
-                        <p v-if="form.errors.artist_id" class="text-danger">{{ form.errors.artist_id }}</p>
 
-                        <p v-for="(error,index) in form.errors" :key="index" class="text-danger">
-                            {{ error }}
-                        </p>
-                    </div>
                     <div class="form-group mb-3">
-                        <label>Release Year</label>
-                        <input type="text" class="form-control" placeholder="Enter release year"
-                               v-model="form.release_year">
-                        <p v-if="form.errors.release_year" class="text-danger">{{ form.errors.release_year }}</p>
+                        <label>Upload Music File</label>
+                        <input type="file" class="form-control" @change="e =>form.music_file= e.target.files[0]">
                     </div>
-
 
                     <div class="d-flex justify-content-between mb-5">
                         <button class="btn btn-primary" :disabled="form.processing">Submit</button>

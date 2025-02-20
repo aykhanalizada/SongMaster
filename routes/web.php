@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\ArtistController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\SongController;
 use Illuminate\Support\Facades\Route;
 
@@ -10,8 +11,8 @@ Route::middleware(['auth'])->group(function () {
 //    Route::inertia('/', 'Songs/Index');
 
     Route::resource('songs', SongController::class);
-    Route::resource('artists', ArtistController::class);
-
+    Route::resource('users', UserController::class);
+    Route::resource('playlists', PlaylistController::class);
 });
 
 Route::middleware(['guest'])->group(function () {

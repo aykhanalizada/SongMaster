@@ -14,24 +14,24 @@ class SongSeeder extends Seeder
     {
         $songs = [
             [
-                'title' => 'Yenidən',
-                'release_year' => 2020
+                'user_id' => 1,
+                'title' => 'Yenidən'
             ],
             [
-                'title' => 'Toxunma',
-                'release_year' => 2021
+                'user_id' => 1,
+                'title' => 'Toxunma'
             ],
             [
-                'title' => 'Suallar',
-                'release_year' => 2019
+                'user_id' => 1,
+                'title' => 'Suallar'
             ],
             [
-                'title' => 'Dəlixanadan Məktublar 2',
-                'release_year' => 2014
+                'user_id' => 1,
+                'title' => 'Dəlixanadan Məktublar 2'
             ],
             [
-                'title' => 'Molotow Cocktail',
-                'release_year' => 2017
+                'user_id' => 1,
+                'title' => 'Molotow Cocktail'
             ],
         ];
 

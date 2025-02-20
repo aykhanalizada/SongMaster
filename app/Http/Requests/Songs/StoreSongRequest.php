@@ -22,9 +22,8 @@ class StoreSongRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "title" => "required",
-            "artist_id" => 'required',
-            'release_year' => ['required', "date_format:Y"]
+            'title' => "required",
+            'music_file' => 'nullable|file'
         ];
     }
 }

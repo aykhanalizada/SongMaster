@@ -1,16 +1,17 @@
 <script setup>
 import AppLayout from '../AppLayout.vue';
 import { Link, router } from '@inertiajs/vue3';
-import { defineProps } from 'vue';
 import Swal from 'sweetalert2'
+
+
+defineProps({
+    users: Array
+})
 
 defineOptions({
     layout: AppLayout
 })
 
-const props = defineProps({
-    artists: Array
-});
 
 const deleteSong = (id) => {
 
@@ -25,7 +26,7 @@ const deleteSong = (id) => {
         cancelButtonText: "Cancel"
     }).then((result) => {
         if (result.isConfirmed) {
-            router.delete(route('artists.destroy', id));
+            router.delete(route('users.destroy', id));
             Swal.fire(
                 "Deleted!",
                 "The song has been removed.",
@@ -40,9 +41,9 @@ const deleteSong = (id) => {
 <template>
     <div class="content-container">
         <!-- Button Container -->
-        <div class="m-4 d-flex">
-            <Link :href="route('artists.create')" class="btn btn-success">Create New Artist</Link>
-        </div>
+<!--        <div class="m-4 d-flex">
+            <Link :href="route('users.create')" class="btn btn-success">Create New User</Link>
+        </div>-->
 
         <!-- Table Container -->
         <div class="table-responsive w-100">
@@ -51,17 +52,23 @@ const deleteSong = (id) => {
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
+                    <th scope="col">Surname</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
                     <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="(artist, index) in artists" :key="artist.id" class="align-middle">
+                <tr v-for="(user, index) in users" :key="user.id" class="align-middle">
                     <td>{{ index + 1 }}</td>
-                    <td>{{ artist.name }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.surname }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
                     <td>
                         <div class="d-flex justify-content-center">
-                            <Link class="btn btn-success me-2" :href="route('artists.edit', artist.id)">Edit</Link>
-                            <button class="btn btn-danger" @click="deleteSong(artist.id)">Delete</button>
+                            <Link class="btn btn-success me-2" :href="route('users.edit', user.id)">Edit</Link>
+                            <button class="btn btn-danger" @click="deleteSong(user.id)">Delete</button>
                         </div>
                     </td>
                 </tr>

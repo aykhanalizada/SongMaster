@@ -22,23 +22,34 @@ const iconClass = computed(() => props.collapsed ? 'fas fa-chevron-right' : 'fas
             <p class="text-muted small hide-on-collapse">Dashboard</p>
         </div>
 
-        <div class="nav flex-column flex-grow">
-            <Link :href="route('songs.index')"
-                  class="sidebar-link text-decoration-none p-3"
-                  :class="{'active': currentUrl.startsWith('/songs')}">
-                <i class="fa-solid fa-music me-3"></i>
-                <span class="hide-on-collapse">Songs</span>
-            </Link>
-        </div>
+        <nav class="flex-grow-1">
+            <div class="nav flex-column flex-grow">
+                <Link :href="route('songs.index')"
+                      class="sidebar-link text-decoration-none p-3"
+                      :class="{'active': currentUrl.startsWith('/songs')}">
+                    <i class="fa-solid fa-music me-3"></i>
+                    <span class="hide-on-collapse">Songs</span>
+                </Link>
+            </div>
 
-        <div class="nav flex-column flex-grow-1">
-            <Link :href="route('artists.index')"
-                  class="sidebar-link text-decoration-none p-3"
-                  :class="{'active': currentUrl.startsWith('/artists')}">
-                <i class="fa-solid fa-person me-3"></i>
-                <span class="hide-on-collapse">Artists</span>
-            </Link>
-        </div>
+            <div class="nav flex-column">
+                <Link :href="route('users.index')"
+                      class="sidebar-link text-decoration-none p-3"
+                      :class="{'active': currentUrl.startsWith('/users')}">
+                    <i class="fa-solid fa-person me-3"></i>
+                    <span class="hide-on-collapse">Users</span>
+                </Link>
+            </div>
+
+            <div class="nav flex-column">
+                <Link :href="route('playlists.index')"
+                      class="sidebar-link text-decoration-none p-3"
+                      :class="{'active': currentUrl.startsWith('/playlists')}">
+                    <i class="fa-solid fa-person me-3"></i>
+                    <span class="hide-on-collapse">Playlists</span>
+                </Link>
+            </div>
+        </nav>
 
         <Link :href="route('logout')" class="sidebar-link text-decoration-none p-3">
             <i class="fa-solid fa-right-from-bracket me-3"></i>

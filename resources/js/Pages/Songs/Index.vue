@@ -14,14 +14,15 @@ defineOptions({
 const props = defineProps({
     songs: Array
 });
+console.log(props.songs)
 
 const playerOptions = {
     autoplay: false, // Prevent unexpected playback
     muted: false, // Ensure audio is not muted by default
     controls: [
         'play',
-        'restart', // Allow users to restart the song
-        'progress',
+        // 'restart', // Allow users to restart the song
+        // 'progress',
         'current-time',
         'duration',
         // 'volume', // Allow volume control
@@ -70,31 +71,20 @@ const deleteSong = (id) => {
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Title</th>
-                <th scope="col">Artist Name</th>
-                <th scope="col">Release Year</th>
+                <th scope="col">Username</th>
                 <th scope="col">Song</th>
                 <th scope="col">Action</th>
-
             </tr>
             </thead>
             <tbody>
-
 
             <tr v-for="(song,index) in songs" :key="song.id" class="align-middle">
                 <td>{{ index + 1 }}</td>
                 <td>{{ song.title }}</td>
 
-                <td>
-                    <span v-for="(artist, index) in song.artists" :key="index">
-                         {{ artist.name }}
-                        <span v-if="index !== song.artists.length - 1">, </span>
-                    </span>
-                </td>
+                <td>{{ song.user.username }}</td>
 
-
-                <td>{{ song.release_year }}</td>
-
-                <td style="max-width: 330px;">
+                <td style="max-width: 100px;">
                     <vue-plyr
                         v-if="song.file_path"
                         :options="playerOptions"

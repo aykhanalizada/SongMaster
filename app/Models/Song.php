@@ -7,12 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Song extends Model
 {
     protected $table = "songs";
-    protected $fillable = ["title", "release_year", "file_path", "is_deleted"];
+    protected $fillable = ["user_id", "title", "file_path", "is_deleted"];
 
-    public function artists()
+    public function user()
     {
-        return $this->belongsToMany(Artist::class, 'artist_song')
-            ->withTimestamps();
+        return $this->belongsTo(User::class);
     }
 
 }
