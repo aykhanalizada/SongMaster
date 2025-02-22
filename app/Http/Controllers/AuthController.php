@@ -2,43 +2,37 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
 
-    public function handleLogin(Request $request)
+    public function handleLogin(LoginRequest $request)
     {
-        $request->validate([
-            'email_or_username' => 'required',
-            'password' => 'required',
-        ]);
 
         $remember = $request->has('remember');
 
-        $fieldType = filter_var($request->email_or_username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        $user = User::where('email', $request->email_or_username)
+            ->orWhere('username', $request->email_or_username)
+            ->first();
 
-        if (Auth::attempt([$fieldType => $request->email_or_username, 'password' => $request->password], $remember)) {
-            return redirect()->route('songs.index');
-        } else {
+        if (!$user || !Auth::attempt([$this->getLoginField($user, $request), 'password' => $request->password], $remember)) {
             return back()->withErrors([
                 'email_or_username' => 'The provided credentials do not match our records.',
             ]);
         }
+
+        return redirect()->route('songs.index');
+
     }
 
 
-    public function handleRegister(Request $request)
+    public function handleRegister(RegisterRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'username' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:3|confirmed',
-        ]);
 
         $user = User::create([
             'name' => $request->name,
@@ -58,5 +52,9 @@ class AuthController extends Controller
         return redirect()->route('login');
     }
 
+    private function getLoginField(User $user, LoginRequest $request): string
+    {
+        return $user->email === $request->email_or_username ? 'email' : 'username';
+    }
 
 }
