@@ -66,7 +66,7 @@ console.log(props.songs)
 
                     <div class="d-flex justify-content-between mb-5">
                         <button class="btn btn-primary" :disabled="form.processing">Submit</button>
-                        <Link :href="route('songs.index')" class="btn btn-light">Go Back</Link>
+                        <Link :href="route('playlists.index')" class="btn btn-light">Go Back</Link>
                     </div>
                 </form>
 
