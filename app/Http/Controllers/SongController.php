@@ -35,6 +35,7 @@ class SongController extends Controller
     public function store(StoreSongRequest $request)
     {
         $data = $request->validated();
+        $path = null;
 
         if ($request->hasFile('music_file')) {
             $path = $request->file('music_file')->store('music', 'public');

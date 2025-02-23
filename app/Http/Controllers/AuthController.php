@@ -13,14 +13,13 @@ class AuthController extends Controller
 
     public function handleLogin(LoginRequest $request)
     {
+        $data = $request->validated();
 
         $remember = $request->has('remember');
 
-        $user = User::where('email', $request->email_or_username)
-            ->orWhere('username', $request->email_or_username)
-            ->first();
+        $loginField = filter_var($data['email_or_username'], FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
-        if (!$user || !Auth::attempt([$this->getLoginField($user, $request), 'password' => $request->password], $remember)) {
+        if (!Auth::attempt([$loginField => $data['email_or_username'], 'password' => $data['password']], $remember)) {
             return back()->withErrors([
                 'email_or_username' => 'The provided credentials do not match our records.',
             ]);
@@ -52,9 +51,5 @@ class AuthController extends Controller
         return redirect()->route('login');
     }
 
-    private function getLoginField(User $user, LoginRequest $request): string
-    {
-        return $user->email === $request->email_or_username ? 'email' : 'username';
-    }
 
 }

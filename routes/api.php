@@ -5,8 +5,13 @@ use App\Http\Controllers\API\SongController;
 use Illuminate\Support\Facades\Route;
 
 
+Route::get('songs', [SongController::class, 'index']);
+Route::get('songs/{id}', [SongController::class, 'show']);
+
 Route::middleware('auth:sanctum')->group(function () {
-    Route::apiResource('songs', SongController::class);
+    Route::post('songs', [SongController::class, 'store']);
+    Route::put('songs/{id}', [SongController::class, 'update']);
+    Route::delete('songs/{id}', [SongController::class, 'destroy']);
 
     Route::post('logout', [AuthController::class, 'logout']);
 });
